@@ -638,7 +638,7 @@ const intx ObjectAlignmentInBytes = 8;
   product(bool, StackTraceInThrowable, true,                                \
           "Collect backtrace in throwable when exception happens")          \
                                                                             \
-  product(bool, OmitStackTraceInFastThrow, true,                            \
+  product(bool, OmitStackTraceInFastThrow, false,                           \
           "Omit backtraces for some 'hot' exceptions in optimized code")    \
                                                                             \
   product(bool, OptimizeImplicitExceptions, true, DIAGNOSTIC,               \

@@ -665,7 +665,9 @@ OopMapSet* Runtime1::generate_code_for(StubID id, StubAssembler* sasm) {
 
           if (id == fast_new_instance_init_check_id) {
             // make sure the klass is initialized
-            __ ldrb(rscratch1, Address(klass, InstanceKlass::init_state_offset()));
+            __ lea(rscratch1, Address(klass, InstanceKlass::init_state_offset()));
+            __ ldarb(rscratch1, rscratch1);
+
             __ cmpw(rscratch1, InstanceKlass::fully_initialized);
             __ br(Assembler::NE, slow_path);
           }

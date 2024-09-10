@@ -3474,7 +3474,8 @@ void TemplateTable::_new() {
 
   // make sure klass is initialized & doesn't have finalizer
   // make sure klass is fully initialized
-  __ ldrb(rscratch1, Address(r4, InstanceKlass::init_state_offset()));
+  __ lea(rscratch1, Address(r4, InstanceKlass::init_state_offset()));
+  __ ldarb(rscratch1, rscratch1);
   __ cmp(rscratch1, (u1)InstanceKlass::fully_initialized);
   __ br(Assembler::NE, slow_case);
 

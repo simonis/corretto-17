@@ -2467,7 +2467,7 @@ void InstanceKlass::remove_unshareable_info() {
   // a shared class at runtime while the class is still being loaded and
   // restored. A class' init_state is set to 'loaded' at runtime when it's
   // being added to class hierarchy (see SystemDictionary:::add_to_hierarchy()).
-  _init_state = allocated;
+  set_init_state(allocated);
 
   { // Otherwise this needs to take out the Compile_lock.
     assert(SafepointSynchronize::is_at_safepoint(), "only called at safepoint");
@@ -3931,7 +3931,7 @@ void InstanceKlass::set_init_state(ClassState state) {
   assert(good_state || state == allocated, "illegal state transition");
 #endif
   assert(_init_thread == NULL, "should be cleared before state change");
-  _init_state = (u1)state;
+  Atomic::release_store_fence(&_init_state, state);
 }
 
 #if INCLUDE_JVMTI
